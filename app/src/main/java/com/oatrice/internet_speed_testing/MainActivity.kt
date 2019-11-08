@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.internet_speed_testing.InternetSpeedBuilder
 import com.example.internet_speed_testing.InternetSpeedBuilder.*
 import com.example.internet_speed_testing.ProgressionModel
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * Created by Ajay Deepak on 30-10-2019, 21:04
@@ -14,19 +15,20 @@ import com.example.internet_speed_testing.ProgressionModel
 
 class MainActivity : AppCompatActivity(){
 
-    private var recyclerView: RecyclerView? = null
-    private var adapter: Adapter? = null
+    private lateinit var rlayoutManager: RecyclerView.LayoutManager
 
+    private val progressionList: ArrayList<ProgressionModel> = ArrayList()
+    private var progressionAdapter =  ProgressionAdapter(progressionList, this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-        recyclerView = findViewById(R.id.recyclerview)
-        adapter = Adapter()
-        recyclerView?.apply {
-            adapter = adapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
+
+        recyclerview?.apply {
+            adapter = progressionAdapter
+            rlayoutManager = LinearLayoutManager(this@MainActivity)
+            layoutManager = rlayoutManager
         }
 
         val builder = InternetSpeedBuilder(this)
@@ -40,7 +42,7 @@ class MainActivity : AppCompatActivity(){
             }
 
             override fun onTotalProgress(count: Int, progressModel: ProgressionModel) {
-                adapter!!.setDataList(count, progressModel)
+                progressionAdapter.setDataList(count, progressModel)
 
             }
         })

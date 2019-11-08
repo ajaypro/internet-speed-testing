@@ -7,6 +7,8 @@ import fr.bmartel.speedtest.SpeedTestReport
 import fr.bmartel.speedtest.SpeedTestSocket
 import fr.bmartel.speedtest.inter.ISpeedTestListener
 import fr.bmartel.speedtest.model.SpeedTestError
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 
 class InternetSpeedBuilder(var activity: Activity) {
 
@@ -18,6 +20,8 @@ class InternetSpeedBuilder(var activity: Activity) {
     lateinit var onUploadProgressListener: () -> Unit
     lateinit var onTotalProgressListener: () -> Unit
     private lateinit var progressModel: ProgressionModel
+
+    lateinit var disposable: Disposable
 
     fun start(url: String, limitCount: Int) {
         this.url = url
